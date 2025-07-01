@@ -1,7 +1,11 @@
-import java.util.*;
+package src;
 
 // A utility class to hold common algorithm methods
 class AlgorithmUtils {
+
+    // ============================
+    // Sorting Algorithms
+    // ============================
 
     // Bubble Sort implementation
     public static void bubbleSort(int[] arr) {
@@ -112,6 +116,10 @@ class AlgorithmUtils {
         while (j < n2) arr[k++] = R[j++];
     }
 
+    // ============================
+    // Searching Algorithms
+    // ============================
+
     // Linear Search implementation
     public static int linearSearch(int[] arr, int x) {
         for (int i = 0; i < arr.length; i++) {
@@ -133,6 +141,10 @@ class AlgorithmUtils {
         return -1;
     }
 
+    // ============================
+    // Number Theory Algorithms
+    // ============================
+
     // Factorial using recursion
     public static int factorial(int n) {
         if (n == 0) return 1;
@@ -145,6 +157,10 @@ class AlgorithmUtils {
         return fibonacci(n-1) + fibonacci(n-2);
     }
 
+    // ============================
+    // String Algorithms
+    // ============================
+
     // Reverse a String
     public static String reverseString(String s) {
         return new StringBuilder(s).reverse().toString();
@@ -154,6 +170,10 @@ class AlgorithmUtils {
     public static boolean isPalindrome(String s) {
         return s.equals(reverseString(s));
     }
+
+    // ============================
+    // Utility Methods
+    // ============================
 
     // Swap two numbers
     public static void swapNums(int a, int b) {
@@ -170,61 +190,220 @@ class AlgorithmUtils {
             System.out.print(val + " ");
         System.out.println();
     }
-}
 
-// Main class to test algorithms
-public class AlgoPractice {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    // ============================
+    // Graph Algorithms
+    // ============================
 
-        // Test Sorting algorithms
-        int[] numbers = {5, 3, 8, 6, 2, 7, 4, 1};
-        System.out.print("Original Array: ");
-        AlgorithmUtils.printArray(numbers);
+    // BFS for unweighted graphs (adjacency list)
+    public static void bfs(int start, java.util.List<java.util.List<Integer>> adj, boolean[] visited) {
+        java.util.Queue<Integer> queue = new java.util.LinkedList<>();
+        queue.offer(start);
+        visited[start] = true;
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            System.out.print(node + " ");
+            for (int neighbor : adj.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    queue.offer(neighbor);
+                }
+            }
+        }
+    }
 
-        AlgorithmUtils.bubbleSort(numbers);
-        System.out.print("Bubble Sorted: ");
-        AlgorithmUtils.printArray(numbers);
+    // DFS for unweighted graphs (adjacency list)
+    public static void dfs(int node, java.util.List<java.util.List<Integer>> adj, boolean[] visited) {
+        visited[node] = true;
+        System.out.print(node + " ");
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, adj, visited);
+            }
+        }
+    }
 
-        int[] nums2 = {9, 7, 5, 3, 1, 2, 4, 6, 8};
-        AlgorithmUtils.insertionSort(nums2);
-        System.out.print("Insertion Sorted: ");
-        AlgorithmUtils.printArray(nums2);
+    // ============================
+    // Number Theory Algorithms (cont.)
+    // ============================
 
-        int[] nums3 = {4, 2, 9, 1, 5, 6};
-        AlgorithmUtils.selectionSort(nums3);
-        System.out.print("Selection Sorted: ");
-        AlgorithmUtils.printArray(nums3);
+    // GCD using Euclidean algorithm
+    public static int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
 
-        int[] nums4 = {11, 5, 7, 9, 3, 2};
-        AlgorithmUtils.quickSort(nums4, 0, nums4.length-1);
-        System.out.print("Quick Sorted: ");
-        AlgorithmUtils.printArray(nums4);
+    // Count set bits in integer (Brian Kernighan's algorithm)
+    public static int countSetBits(int n) {
+        int count = 0;
+        while (n != 0) {
+            n &= (n - 1);
+            count++;
+        }
+        return count;
+    }
 
-        int[] nums5 = {10, 8, 6, 4, 2};
-        AlgorithmUtils.mergeSort(nums5, 0, nums5.length-1);
-        System.out.print("Merge Sorted: ");
-        AlgorithmUtils.printArray(nums5);
+    // Check if a number is power of two
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
 
-        // Search algorithms
-        int searchVal = 7;
-        int pos = AlgorithmUtils.linearSearch(numbers, searchVal);
-        System.out.println("Linear Search for 7: " + pos);
+    // XOR of all elements in array
+    public static int xorAll(int[] arr) {
+        int xor = 0;
+        for (int val : arr) xor ^= val;
+        return xor;
+    }
 
-        int binPos = AlgorithmUtils.binarySearch(numbers, 7);
-        System.out.println("Binary Search for 7: " + binPos);
+    // ============================
+    // String Algorithms (cont.)
+    // ============================
 
-        // Recursion algorithms
-        System.out.println("Factorial of 5: " + AlgorithmUtils.factorial(5));
-        System.out.println("Fibonacci of 7: " + AlgorithmUtils.fibonacci(7));
+    // Naive String Match
+    public static int naiveStringMatch(String text, String pattern) {
+        int n = text.length();
+        int m = pattern.length();
+        for (int i = 0; i <= n - m; i++) {
+            int j = 0;
+            while (j < m && text.charAt(i + j) == pattern.charAt(j)) j++;
+            if (j == m) return i;
+        }
+        return -1;
+    }
 
-        // String manipulation
-        String word = "level";
-        System.out.println("Is 'level' a palindrome? " + AlgorithmUtils.isPalindrome(word));
+    // KMP String Search
+    public static int kmpSearch(String text, String pattern) {
+        int n = text.length();
+        int m = pattern.length();
+        int[] lps = computeLPSArray(pattern);
+        int i = 0, j = 0;
+        while (i < n) {
+            if (text.charAt(i) == pattern.charAt(j)) {
+                i++; j++;
+            }
+            if (j == m) return i - j;
+            else if (i < n && text.charAt(i) != pattern.charAt(j)) {
+                if (j != 0) j = lps[j - 1];
+                else i++;
+            }
+        }
+        return -1;
+    }
 
-        // Swap numbers
-        AlgorithmUtils.swapNums(10, 20);
+    private static int[] computeLPSArray(String pat) {
+        int m = pat.length();
+        int[] lps = new int[m];
+        int len = 0, i = 1;
+        while (i < m) {
+            if (pat.charAt(i) == pat.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) len = lps[len - 1];
+                else { lps[i] = 0; i++; }
+            }
+        }
+        return lps;
+    }
 
-        sc.close();
+    // ============================
+    // Tree Algorithms
+    // ============================
+
+    // Definition for a binary tree node
+    static class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode(int x) { val = x; }
+    }
+
+    // Inorder Traversal
+    public static void inorder(TreeNode root) {
+        if (root == null) return;
+        inorder(root.left);
+        System.out.print(root.val + " ");
+        inorder(root.right);
+    }
+
+    // Preorder Traversal
+    public static void preorder(TreeNode root) {
+        if (root == null) return;
+        System.out.print(root.val + " ");
+        preorder(root.left);
+        preorder(root.right);
+    }
+
+    // Postorder Traversal
+    public static void postorder(TreeNode root) {
+        if (root == null) return;
+        postorder(root.left);
+        postorder(root.right);
+        System.out.print(root.val + " ");
+    }
+
+    // ============================
+    // Disjoint Set (Union-Find)
+    // ============================
+
+    static class DisjointSet {
+        int[] parent, rank;
+        public DisjointSet(int n) {
+            parent = new int[n];
+            rank = new int[n];
+            for (int i = 0; i < n; i++) parent[i] = i;
+        }
+        public int find(int x) {
+            if (parent[x] != x) parent[x] = find(parent[x]);
+            return parent[x];
+        }
+        public void union(int x, int y) {
+            int xr = find(x), yr = find(y);
+            if (xr == yr) return;
+            if (rank[xr] < rank[yr]) parent[xr] = yr;
+            else if (rank[xr] > rank[yr]) parent[yr] = xr;
+            else { parent[yr] = xr; rank[xr]++; }
+        }
+    }
+
+    // ============================
+    // Segment Tree (Range Sum, Point Update)
+    // ============================
+
+    static class SegmentTree {
+        int[] tree;
+        int n;
+        public SegmentTree(int[] arr) {
+            n = arr.length;
+            tree = new int[2 * n];
+            build(arr);
+        }
+        private void build(int[] arr) {
+            System.arraycopy(arr, 0, tree, n, n);
+            for (int i = n - 1; i > 0; --i)
+                tree[i] = tree[2 * i] + tree[2 * i + 1];
+        }
+        // Range sum query [l, r)
+        public int query(int l, int r) {
+            int res = 0;
+            l += n; r += n;
+            while (l < r) {
+                if ((l & 1) == 1) res += tree[l++];
+                if ((r & 1) == 1) res += tree[--r];
+                l >>= 1; r >>= 1;
+            }
+            return res;
+        }
+        // Point update: set arr[pos] = value
+        public void update(int pos, int value) {
+            pos += n;
+            tree[pos] = value;
+            for (pos >>= 1; pos > 0; pos >>= 1)
+                tree[pos] = tree[2 * pos] + tree[2 * pos + 1];
+        }
     }
 }
