@@ -10,7 +10,8 @@ This repository provides comprehensive implementations of fundamental algorithms
 .
 ├── algos.py                  # Python implementations of algorithms and data structures
 ├── algos.java                # Java implementations of algorithms and data structures
-└── README.md                 # Project documentation
+├── README.md                 # Project documentation
+└── requirements.txt          # Requirements
 ```
 
 ## Implemented Algorithms and Data Structures
@@ -125,4 +126,4 @@ This repository is provided for educational and personal use. No explicit licens
 
 ---
 
-By exploring and experimenting with the code in this repository, you can build a solid foundation in algorithms and data structures. Contributions and suggestions are welcome!
+Contributions and suggestions are welcome
